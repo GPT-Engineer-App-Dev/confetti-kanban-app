@@ -21,8 +21,8 @@ const Index = () => {
         <Box
           as="canvas"
           ref={canvasRef}
-          width="300"
-          height="300"
+          width="200"
+          height="200"
           border="1px solid #2a69ac"
           borderRadius="md"
           boxShadow="md"
