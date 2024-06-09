@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Container, Heading, VStack } from "@chakra-ui/react";
+import { Box, Container, Heading, VStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const initialTasks = {
@@ -35,22 +35,26 @@ const KanbanPage = () => {
     });
   };
 
+  const bg = useColorModeValue("gray.100", "gray.700");
+  const columnBg = useColorModeValue("white", "gray.800");
+
   return (
     <Container maxW="container.lg" py={4}>
       <Heading mb={4}>Kanban Board</Heading>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Box display="flex" justifyContent="space-between">
+        <Box display="flex" justifyContent="space-between" flexWrap="wrap">
           {Object.keys(tasks).map((columnId) => (
             <Droppable key={columnId} droppableId={columnId}>
               {(provided) => (
                 <VStack
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  bg="gray.100"
+                  bg={bg}
                   p={4}
                   borderRadius="md"
-                  w="30%"
+                  w={{ base: "100%", md: "30%" }}
                   minH="400px"
+                  mb={{ base: 4, md: 0 }}
                 >
                   <Heading size="md" mb={4}>
                     {columnId.charAt(0).toUpperCase() + columnId.slice(1)}
@@ -63,13 +67,13 @@ const KanbanPage = () => {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                           p={4}
-                          bg="white"
+                          bg={columnBg}
                           borderRadius="md"
                           boxShadow="md"
                           mb={4}
                           w="100%"
                         >
-                          {task.content}
+                          <Text>{task.content}</Text>
                         </Box>
                       )}
                     </Draggable>
